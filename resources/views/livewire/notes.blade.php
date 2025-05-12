@@ -5,7 +5,7 @@
 
     <flux:modal.trigger name="create-note">
         <flux:button icon="plus" class="mt-4">Criar agendamento</flux:button>
-    </flux:modal.trigger>   
+    </flux:modal.trigger>
 
     @session('success')
     <div 
