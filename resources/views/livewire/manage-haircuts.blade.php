@@ -10,20 +10,20 @@
     </div>
 
     <flux:modal name="manage-haircuts" class="w-full max-w-md md:max-w-2xl">
-        <div class="space-y-4 bg-gray-800 p-4 rounded-lg">
+        <div class="space-y-4  p-4 rounded-lg">
             <div>
                 <flux:heading size="lg">Gerenciar Tipos de Corte</flux:heading>
                 <flux:text class="mt-1 text-gray-300">Adicione, edite ou remova tipos de corte e seus preços.</flux:text>
             </div>
 
-            <div class="bg-gray-700 p-4 rounded-lg">
+            <div class=" p-4 rounded-lg">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                     <div>
                         <flux:input 
                             label="Nome do Corte" 
                             wire:model="name" 
                             placeholder="Ex: Corte social" 
-                            class="bg-gray-800 border-gray-600"
+                            class=" border-gray-600"
                         />
                     </div>
                     <div>
@@ -32,7 +32,7 @@
                             label="Preço" 
                             wire:model.lazy="price" 
                             placeholder="R$ 0,00"
-                            class="bg-gray-800 border-gray-600"
+                            class=" border-gray-600"
                             x-data="{
                                 formatPrice() {
                                     let value = this.$el.value.replace(/[^\d]/g, '');
@@ -68,10 +68,11 @@
             <flux:input 
                 wire:model.live.debounce.300ms="search" 
                 placeholder="Pesquisar cortes..." 
-                class="bg-gray-700 border-gray-600"
+                style="display:none;"
+                class=" border-gray-600"
             />
 
-            <div class="overflow-x-auto" style="margin-top: 10px;">
+            <div class="overflow-x-auto" style="margin-top: 10px;display:none;">
                 <table class="w-full rounded-lg overflow-hidden" style="background-color:#0F172A;">
                     <thead style="background-color: #0f172a;">
                         <tr>
@@ -96,8 +97,8 @@
                                             icon="trash" 
                                             size="sm" 
                                             variant="danger"
-                                            wire:click="delete({{ $haircut->id }})"
-                                        ></flux:button>
+                                            wire:click="confirmDelete({{ $haircut->id }})">
+                                        </flux:button>
                                     </div>
                                 </td>
                             </tr>
@@ -119,20 +120,20 @@
     </flux:modal>
 
     <flux:modal name="edit-haircut" class="w-full max-w-md md:max-w-2xl">
-        <div class="space-y-4 bg-gray-800 p-4 rounded-lg">
+        <div class="space-y-4  p-4 rounded-lg">
             <div>
                 <flux:heading size="lg">Editar Corte</flux:heading>
                 <flux:text class="mt-1 text-gray-300">Edite os detalhes deste tipo de corte.</flux:text>
             </div>
 
-            <div class="bg-gray-700 p-4 rounded-lg">
+            <div class=" p-4 rounded-lg">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                     <div>
                         <flux:input 
                             label="Nome do Corte" 
                             wire:model="editName" 
                             placeholder="Ex: Corte social" 
-                            class="bg-gray-800 border-gray-600"
+                            class=" border-gray-600"
                         />
                     </div>
                     <div>
@@ -141,7 +142,7 @@
                             label="Preço" 
                             wire:model.lazy="editPrice" 
                             placeholder="R$ 0,00"
-                            class="bg-gray-800 border-gray-600"
+                            class=" border-gray-600"
                             x-data="{
                                 formatPrice() {
                                     let value = this.$el.value.replace(/[^\d]/g, '');
@@ -175,11 +176,11 @@
     </flux:modal>
 
     <flux:input 
-        wire:model.live.debounce.300ms="search" 
-        placeholder="Pesquisar cortes..." 
-        style="margin-top: 10px;"
-        class="bg-gray-700 border-gray-600"
-    />
+    wire:model.live.debounce.300ms="search" 
+    placeholder="Pesquisar cortes..." 
+    style="margin-top: 10px;"
+    class="border-gray-600" 
+/>
 
     <div style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;" class="mt-4">
         <table style="width: 100%; background-color: #1e293b; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border-radius: 0.375rem; min-width: 600px;">
@@ -205,7 +206,7 @@
                                 icon="trash" 
                                 size="sm" 
                                 variant="danger"
-                                wire:click="delete({{ $haircut->id }})"> 
+                                wire:click="confirmDelete({{ $haircut->id }})"> 
                             </flux:button>
                         </td>
                     </tr>
@@ -245,4 +246,24 @@
         <p>{{ $value }}</p>
     </div>
     @endsession
+
+    <flux:modal name="delete-hair" class="min-w-[22rem]">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">Excluir corte?</flux:heading>
+                <flux:text class="mt-2">
+                    <p>Você está prestes a excluir este corte,</p>
+                    <p>Essa ação não pode ser desfeita!</p>
+                </flux:text>
+            </div>
+
+            <div class="flex gap-2">
+                <flux:spacer />
+                <flux:modal.close>
+                    <flux:button variant="ghost">Cancelar</flux:button>
+                </flux:modal.close>
+                <flux:button variant="danger" wire:click="deleteNote">Excluir</flux:button>
+            </div>
+        </div>
+    </flux:modal>
 </div>

@@ -17,7 +17,8 @@
                     <flux:navlist.item icon="calendar-days" :href="route('notes')" :current="request()->routeIs('notes')" wire:navigate>{{ __('Agendamentos') }}</flux:navlist.item>
                     <flux:navlist.item icon="users" :href="route('peoples')" :current="request()->routeIs('peoples')" wire:navigate>{{ __('Barbeiro') }}</flux:navlist.item>
                     <flux:navlist.item icon="user" :href="route('client')" :current="request()->routeIs('client')" wire:navigate>{{ __('Cliente') }}</flux:navlist.item>
-                    <flux:navlist.item icon="user" :href="route('haircuts')" :current="request()->routeIs('haircuts')" wire:navigate>{{ __('Cortes') }}</flux:navlist.item>    
+                    <flux:navlist.item icon="scissors" :href="route('haircuts')" :current="request()->routeIs('haircuts')" wire:navigate>{{ __('Cortes') }}</flux:navlist.item>
+                    <flux:navlist.item icon="file-text" :href="route('reports')" :current="request()->routeIs('reports')" wire:navigate>{{ __('Relatorios') }}</flux:navlist.item>        
                 </flux:navlist.group>
             </flux:navlist>
 

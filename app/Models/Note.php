@@ -12,4 +12,26 @@ class Note extends Model
     {
         return $query->whereDate('created_at', today());
     }
+    
+    public function scopeByDate($query, $date)
+    {
+        if ($date) {
+            return $query->whereDate('created_at', \Carbon\Carbon::createFromFormat('d/m/Y', $date));
+        }
+        return $query;
+    }
+    
+    public function scopeByBarber($query, $barberName)
+    {
+        if ($barberName && $barberName !== 'Todos') {
+            return $query->where('barber', $barberName);
+        }
+        return $query;
+    }
+    
+    public function scopeByMonth($query, $month, $year)
+    {
+        return $query->whereMonth('created_at', $month)
+                    ->whereYear('created_at', $year);
+    }
 }

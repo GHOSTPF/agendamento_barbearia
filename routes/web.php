@@ -8,11 +8,9 @@ use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 
-// Redireciona a raiz para /notes
 Route::redirect('/', '/notes')
     ->name('home');
 
-// Rota de dashboard removida (ou mantida como redirecionamento)
 Route::redirect('dashboard', '/notes')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -27,6 +25,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('peoples', Peoples::class)->name('peoples');
     Route::get('client', Clients::class)->name('client');
     Route::get('haircuts', \App\Livewire\ManageHaircuts::class)->name('haircuts');
+    Route::get('reports', \App\Livewire\MonthlyReport::class)->name('reports');
 });
 
 require __DIR__.'/auth.php';

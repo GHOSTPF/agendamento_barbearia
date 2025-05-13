@@ -15,8 +15,7 @@ class ManageHaircuts extends Component
     public $price;
     public $editingId = null;
     public $search = '';
-    
-    // Propriedades para edição
+    public $haircutToDelete = null; 
     public $editId;
     public $editName;
     public $editPrice;
@@ -27,6 +26,43 @@ class ManageHaircuts extends Component
         'editName' => 'required|string|max:255',
         'editPrice' => 'required|numeric|min:0',
     ];
+
+    public function save()
+    {
+        $this->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        $price = is_numeric($this->price) ? $this->price : 
+                (float) str_replace(['R$', ',', '.'], ['', '', '.'], $this->price);
+
+        Haircut::create([
+            'name' => $this->name,
+            'price' => $price,
+        ]);
+
+        $this->reset(['name', 'price']);
+        Flux::modal('manage-haircuts')->close();
+        session()->flash('message', 'Corte adicionado com sucesso!');
+        $this->redirectRoute('haircuts', navigate: true);
+    }
+
+    public function confirmDelete($id)
+    {
+        $this->haircutToDelete = $id;
+        Flux::modal('delete-hair')->show();
+    }
+
+    public function deleteNote()
+    {
+        if ($this->haircutToDelete) {
+            Haircut::find($this->haircutToDelete)->delete();
+            $this->haircutToDelete = null;
+            session()->flash('message', 'Corte removido com sucesso!');
+            Flux::modal('delete-hair')->close();
+        }
+    }
 
     public function editHaircut($id)
     {
@@ -63,8 +99,11 @@ class ManageHaircuts extends Component
         Flux::modal('edit-haircut')->close();
     }
 
-    // ... manter os outros métodos existentes (save, delete, etc) ...
-    
+    public function resetForm()
+    {
+        $this->reset(['name', 'price', 'editingId']);
+    }
+
     public function render()
     {
         $haircuts = Haircut::when($this->search, function($query) {

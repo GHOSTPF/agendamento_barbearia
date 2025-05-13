@@ -1,10 +1,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Marcos Barbearia</title>
+<title>Barber Agenda</title>
 
-<link rel="icon" href="/icone_barber.ico" sizes="any">
-<link rel="icon" href="/icone_barber.ico" type="image/svg+xml">
+<link rel="icon" href="/barberpole-svgrepo-com.svg" sizes="any">
+<link rel="icon" href="/barberpole-svgrepo-com.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/icone_barber.png">
 
 <link rel="preconnect" href="https://fonts.bunny.net">
